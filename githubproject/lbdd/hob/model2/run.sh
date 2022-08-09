@@ -1,0 +1,3 @@
+#chemprop_train --data_path data5/train_full.csv --dataset_type classification --save_dir checkpoints_5 --config_path hyperoptfile3 --epochs 100 --separate_test_path data/test_random_nocanonical.csv --separate_val_path data5/val_full.csv --features_generator rdkit_2d_normalized --no_features_scaling
+#chemprop_predict --test_path test/test_random_nocanonical.csv --checkpoint_dir checkpoint_all --preds_path result.csv --features_generator rdkit_2d_normalized --no_features_scaling
+chemprop_predict --test_path test/test_random_nocanonical.csv --checkpoint_dir checkpoint_all3 --preds_path result_3model.csv --features_generator rdkit_2d_normalized --no_features_scaling

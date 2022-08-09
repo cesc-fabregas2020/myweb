@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}主页面{% endblock %}
+
+{% block content %} 
+    <!-- Main content -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+            
+                <h2>
+                    <i>CMDB</i>
+                    
+                </h2>
+            
+            <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div>
+                    <p>Welcome to <I>CMDB (Compound Management DataBase)</I>, a public access service for computational ligand discovery. <I>CMDB</I> contains tools to help you manage the in-house compounds: you can upload and download the structure, record the realated assays and predict useful properties</p>
+                    <p><I>CMDB</I> is provided by Xiangyu Jia, senior expert in CADD and AIDD. Xiangyu Jia has done business with Silicon Therapeutics, Simcere and OTSUKA.</p>
+                    <p>The current version of <I>CMDB</I> is not open sourced.  For now, to use <I>CMDB</I>, please contact Xiangyu Jia by xychina.jia@gmail.com</p>
+                    <p>To use <I>CMDB</I>, you must create an account and log in.</p>
+                    <p>Caveat Emptor: We do not guarantee the quality of any calculation for any purpose and take no responsibility for errors arising from the use of this system. <I>CMDB</I> is provided in the hope that it will be useful, but you must use it at your own risk.</p>
+                    <p><I>CMDB</I> is a work in progress. (July 31, 2022).  Any suggestion will be appreciated.</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="col-sm p-1 align-items-center">
+            <center><img class="img-fluid rounded" src="{% static 'images/feymann.png' %}" style="width: 45vw;" alt="centered image"></center>
+        </div>
+    </div>
+
+
+
+          </div>
+        </div>
+    <!-- /.content -->
+{% endblock %}

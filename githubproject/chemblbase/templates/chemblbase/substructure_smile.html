@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}分子模板{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        分子模板
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">分子模板</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <form action="{% url 'chemblbase:substructure_search_results' %}" method="post">
+            {% csrf_token %}
+            <div class="fieldWrapper">
+              {{ form.ligand_smile.errors }}
+              {{ form.ligand_smile|as_crispy_field }}
+              <input type="reset" value="Clear" style="width:50px;vertical-align:5px;border-radius:5px;">&nbsp;&nbsp;<input type="button" value="Draw Molecule" style="vertical-align:5px;border-radius:5px;" onClick="startEditor();"> <input type="submit" style="vertical-align:5px;border-radius:5px;" value="Submit" />
+            </div>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <div>
+              {{ form.datasource.errors }}
+              {{ form.datasource|as_crispy_field }}
+            </div>
+   
+        </form>
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block script %}
+
+<script>
+    var smiles = "";
+    var jme = "0 0";
+    function startEditor() {
+        window.open("{% url 'chemblbase:jme_window' %}",'JME','width=500,height=450,scrollbars=no,resizable=yes');
+    }
+    function fromEditor(smiles,jme) {
+        if (smiles=="") {
+            alert ("no molecule submitted");
+            return;
+        }
+        document.getElementById('myinput').value = smiles;
+    }
+</script>
+
+{% endblock %}

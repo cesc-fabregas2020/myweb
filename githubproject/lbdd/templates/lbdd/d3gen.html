@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block title %}小分子三维构象生成{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        小分子三维构象生成
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">小分子三维构象生成</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+
+    <form action="{% url 'lbdd:d3gen' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %} 
+        <p>{{ form.non_field_errors }}</p>
+        <P class="fieldWrapper">
+          {{ form.conf_type.errors }}
+          {{ form.conf_type|as_crispy_field }}
+        </P>
+        <P class="fieldWrapper">
+          {{ form.chirality_source.errors }}
+          {{ form.chirality_source|as_crispy_field }}
+        </P>
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }} 
+        </p>
+        <p><input type="submit" value="Generation" /></p>
+    </form>
+
+    <!-- /.content -->
+{% endblock %}

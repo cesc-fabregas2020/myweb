@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Chembl化合物总表{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Chembl化合物总表
+        <small>compounds list</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">Chembl化合物总表</li>
+      </ol>
+    </section>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+
+        <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">化合物库<small>(测试版)</small></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="compounds_table" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Chembl号</th>
+              <th>smile</th>
+              <th>2D picture</th>
+            </tr>
+            </thead>
+            <tbody>
+
+              {% for compound in allcompounds %}
+              <tr>
+                <td class="text-green text-bold">{{ compound.molregno.chembl.chembl_id }}</td>
+                <td>{{ compound.canonical_smiles }}</td>
+                <td>
+                  <div code="JME.class" archive="JME.jar" width=80 height=60>     
+                    <param name="options" value="depict,useopenchemlib">
+                    <param name="smiles"
+                         value={{ compound.canonical_smiles }} >
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Chembl号</th>
+              <th>smile</th>
+              <th>2D picture</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      <!-- /.box-body -->
+      </div>
+    <!-- /.box -->
+      </div>
+  <!-- /.col -->
+    </div>
+  <!-- /.row -->
+    </section>
+
+
+ 
+
+
+{% endblock %}
+
+{% block script %}
+
+
+
+<script src="{% static 'adminlet-2.4.10/plugins/datatables/jquery.dataTables.js' %}"></script>
+
+<script src="{% static 'adminlet-2.4.10/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+
+<script type="text/javascript" language="javascript" src="{% static 'JSME_2021-07-13/jsme/jsme.nocache.js' %}"></script>
+
+
+
+<script>
+  $(function () {
+    $('#compounds_table').DataTable({
+      "paging": true,       
+      "lengthChange": true,
+      "searching": true,    
+      "ordering": true,    
+      "info": true,         
+      "autoWidth": true,   
+    });
+  });
+</script>
+
+
+
+{% endblock %}

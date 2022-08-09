@@ -1,0 +1,2 @@
+chemprop_hyperopt --data_path data/alldata_chemprop_random_nocanonical.csv --dataset_type classification --num_iters 50 --epochs 100 --config_save_path hyperoptfile
+

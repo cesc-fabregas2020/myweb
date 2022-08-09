@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block title %}数据库高级搜索{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        数据库高级搜索
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">数据库高级搜索</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %} 
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <form action="{% url 'chemblbase:inhousecompound' %}" method='post'> 
+            {% csrf_token %}
+            <div class="form-group col-md-6 md-0">
+              {{ form.AS_ligand_id.errors }}
+              {{ form.AS_ligand_id|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 md-0">
+              {{ form.AS_target_id.errors }}
+              {{ form.AS_target_id|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 md-0">
+              {{ form.AS_assay_type.errors }}
+              {{ form.AS_assay_type|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 md-0">
+              {{ form.AS_recorder.errors }}
+              {{ form.AS_recorder|as_crispy_field }}
+            </div>
+            <br>
+            <p><input type="submit" value="Search" /></p>
+          </form>
+    </section>
+    <!-- /.content -->
+{% endblock %}
