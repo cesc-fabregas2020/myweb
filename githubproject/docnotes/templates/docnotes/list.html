@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block title %}小分子三维构象生成{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        学习文档
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">学习文档</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <div class="container">
+      <div class="row">
+          <!-- Blog Entries Column -->
+          <div class="col-md-8 mt-3 left">
+              {% for post in queryset %}
+              <div class="card mb-4">
+                  <div class="card-body">
+                      <h2 class="card-title">{{ post.title }}</h2>
+                      <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                      <p class="card-text">{{post.content|slice:":200" }}</p>
+                      <!--a href="{% url 'docnotes:blog_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a-->
+                      <a href="{{ post.url }}" class="btn btn-primary">Read More &rarr;</a>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+
+      </div>
+  </div>
+    <!-- /.content -->
+{% endblock %}

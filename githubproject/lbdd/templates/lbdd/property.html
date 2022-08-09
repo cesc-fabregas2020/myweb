@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block title %}化合物性质预测{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        化合物性质预测
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">化合物性质预测</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+
+    <form action="{% url 'lbdd:property_prediction' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <P class="fieldWrapper">
+          {{ form.compounds.errors }}
+          {{ form.compounds|as_crispy_field }}
+        </P>
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }}
+        </p>
+        <p><input type="submit" value="Predict" /></p>
+    </form>
+    {% if ames_results_dic %}
+    <a href="{{dfile.docfile.url}}"><button class="btn btn-default btn-md">Download Predictions</button></a>
+    {% for compound in ames_results_dic %}
+    <p>SMILES: {{compound.SMILES}}</p>            
+    <p>AMES: {{compound.Label}}</p>
+    <p>HOB: {{compound.hob}}</p>
+    <hr>
+    {% endfor %} 
+    {% else %}
+
+    {% endif %}
+    <!-- /.content -->
+{% endblock %}

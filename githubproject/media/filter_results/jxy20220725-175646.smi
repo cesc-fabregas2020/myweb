@@ -1,0 +1,17 @@
+Fc1c(F)c(F)[c-](~[Ti]2345(~[c-]6cccc6)(~[c-]6c(F)c(F)c(F)c(F)c6F)~[c-]6c~2c~3c~4c6~5)c(F)c1F
+C1=CC=NC=C1.[H]Br(Br)Br
+C[SH](C)B(F)(F)F
+[H]C12=C3([H])[C-]4([H])C5([H])=C1([H])[Ti]23541678(Cl)(Cl)C2([H])=C1([H])[C-]6([H])C7([H])=C28[H]
+[CH2]1=[CH]2[CH2-][Pd+2]123[Cl-][Pd+2]12([CH2]=[CH]1[CH2-]2)[Cl-]3
+[Cl-][Pd+2]123([Cl-])[CH]4=[CH]1CC[CH]2=[CH]3CC4
+OC[C-]12[CH]3=[CH]4[CH]5=[CH]1[Fe+2]45321678[CH]2=[CH]1[CH-]6[CH]7=[CH]28
+[H]C12=C3([H])[C-]4(P(C5CCCCC5)C5CCCCC5)C5([C@@H](C)P(C(C)(C)C)C(C)(C)C)=C1[Fe+2]52341678C2=C1[C-]6C7=C28
+[Cl-][Ru]([Cl-])(=CC1=CC=CC=C1)([P+](C1CCCCC1)(C1CCCCC1)C1CCCCC1)[P+](C1CCCCC1)(C1CCCCC1)C1CCCCC1
+CC(C)(C)[PH]1(C(C)(C)C)[C-]23C4=C5C6=C2[Fe+2]56432789C3=C2[C-]7(C8=C39)[PH](C(C)(C)C)(C(C)(C)C)[Pd+2]1([Cl-])[Cl-]
+C1=CC2=N(C=C1)[Ru+2]13(N4=C2C=CC=C4)(N2=C(C=CC=C2)C2=N1C=CC=C2)N1=C(C=CC=C1)C1=N3C=CC=C1.[F-][PH2+5]([F-])([F-])([F-])([F-])[F-].[F-][PH2+5]([F-])([F-])([F-])([F-])[F-]
+F[Si-2](F)(F)(F)(F)F.[Li+].[Li+]
+F[Si-2](F)(F)(F)(F)F.[Na+].[Na+]
+F[Si-2](F)(F)(F)(F)F.[NH4+].[NH4+]
+F[Si-2](F)(F)(F)(F)F.[K+].[K+]
+[F-][Ti+4]123456789([F-])~c%10c~1[c-]~2(c~31c%10~4CCCC1)CC[c-]~51c~6c~7c~82c1~9CCCC2
+F[Si-2](F)(F)(F)(F)F.[Ba+2]

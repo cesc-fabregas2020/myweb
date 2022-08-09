@@ -1,0 +1,11 @@
+Smile,Label
+OC(CO)CO,0.0765967071056366
+c1cccc2cc3ccc4cccc5ccc(c12)c3c54,0.8964505791664124
+O=C(N(N=O)CC)N,0.9553661942481995
+C(C(C)C)CC(CCc1cc2c(cc1)c([N+](=O)[O-])ccc2)C,0.5397288799285889
+CC[C@H](N1[C@H]2[C@@H](C)[C@@](C)(CC1)c1cc(NCc3cncnc3)ccc1C2)c1c(Cl)cc(F)cc1,0.31557732820510864
+C(Nc1cc2c(cc1)C[C@@H]1[C@@H](C)[C@@]2(C)CCN1[C@@H](CC)c1ccc(F)cc1Cl)c1cccnc1,0.31181150674819946
+C1[C@H]2N([C@@H](CC)c3ccc(F)cc3Cl)CC[C@@](C)(c3cc(N)ccc31)[C@@H]2C,0.4353484511375427
+c1(Cl)cc(F)ccc1[C@@H]([N@@H+]1CC[C@@]2(C)c3c(ccc(NCc4cncnc4)c3)C[C@@H]1[C@H]2C)CC,0.309846967458725
+[C@@H](c1c(Cl)cc(F)cc1)(CC)[N@@H+]1[C@@H]2Cc3ccc(NCc4cccnc4)cc3[C@](C)(CC1)[C@@H]2C,0.25612327456474304
+C1C[C@@]2(C)c3cc(N)ccc3C[C@H]([C@H]2C)[N@@H+]1[C@H](c1ccc(F)cc1Cl)CC,0.3807843327522278

@@ -1,0 +1,7 @@
+dbName	refName	Shape-it::Tanimoto	Shape-it::Tversky_Ref	Shape-it::Tversky_Db	overlap	refVolume	dbVolume
+MOL_1	Unnamed_ref	0.775	0.909	0.84	3474.9	3805.7	4154
+MOL_2	Unnamed_ref	0.725	0.9	0.789	3451.2	3805.7	4404.3
+MOL_3	Unnamed_ref	0.838	0.945	0.881	3609.4	3805.7	4111.7
+MOL_4	Unnamed_ref	0.838	0.952	0.875	3640.7	3805.7	4178.9
+MOL_5	Unnamed_ref	0.345	0.585	0.456	2260.2	3805.7	5013.1
+MOL_6	Unnamed_ref	0.309	0.579	0.399	2261.1	3805.7	5771.4

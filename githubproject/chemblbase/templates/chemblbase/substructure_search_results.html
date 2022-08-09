@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}A compound list of substructure search results } {% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        A compound list of substructure search results
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">A compound list of substructure search results </li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+
+        <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">A compound list of substructure search results <small>(测试版)</small></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="compounds_table" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>molecule id</th>
+              <th>molecule smiles</th>
+              <th>assay description</th>
+              <th>assay type</th>
+              <th>target id</th>
+              <th>target name</th>
+              <th>activity type</th>
+              <th>activity unit</th>
+              <th>activity value</th>
+            </tr>
+            </thead>
+            <tbody>
+              <!--script type="text/javascript" language="javascript" src="{% static 'JSME_2021-07-13/jsme/jsme.nocache.js' %}"></script--> 
+              {% for activity in table_data %}
+              <tr>
+                <td>{{ activity.molecule_id }}</td> 
+                <!--td><li><a href="{% url 'chemblbase:singlemolecule' activity.molecule_id %}">{{ activity.molecule_smiles }}</a></li></td--> 
+                <!--td><div code="JME.class" archive="JME.jar" width=240 height=180><param name="options" value="depict,useopenchemlib"><param name="smiles" value={{activity.molecule_smiles}} ></div></td-->
+                <td><a href="#" class="bordered-feature-image"><img src="{% static activity.image_url %}" alt="" /></a></td>
+                <td>{{ activity.assay_description }}</td>
+                <td>{{ activity.assay_type }}</td>
+                <td>{{ activity.target_id }}</td>
+                <td>{{ activity.target_name }}</td>
+                <td>{{ activity.type }}</td>
+                <td>{{ activity.unit }}</td>
+                <td>{{ activity.value}}</td> 
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>molecule id</th>
+                <th>molecule smiles</th>
+                <th>assay description</th>
+                <th>assay type</th>
+                <th>target id</th>
+                <th>target name</th>
+                <th>activity type</th>
+                <th>activity unit</th>
+                <th>activity value</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      <!-- /.box-body -->
+      </div>
+    <!-- /.box -->
+      </div>
+  <!-- /.col -->
+    </div>
+  <!-- /.row -->
+    </section>
+
+
+ 
+
+
+{% endblock %}
+
+{% block script %}
+
+
+
+<script src="{% static 'adminlet-2.4.10/plugins/datatables/jquery.dataTables.js' %}"></script>
+
+<script src="{% static 'adminlet-2.4.10/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+
+
+<script>
+  $(function () {
+    $('#compounds_table').DataTable({
+      "paging": true,       
+      "lengthChange": true,
+      "searching": true,    
+      "ordering": true,    
+      "info": true,         
+      "autoWidth": true,   
+    });
+  });
+</script>
+
+
+
+{% endblock %}

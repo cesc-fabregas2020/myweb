@@ -1,0 +1,290 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{float}
+
+{% graphicspath %}
+
+\title{Variational Auto-Encoders}
+%\title{Let me 试试 Latex}
+\date{2022-03-15}
+\author{Xiangyu Jia}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+
+\section{Gibbs Inequality}
+\begin{equation}
+    \sum_{i=1}^{n}p_{i}=\sum_{i=1}^{n}q_{i}=1
+\end{equation}
+\begin{equation}
+    \ln(x)\le x-1
+\end{equation}
+\begin{equation}
+    \sum_{i=1}^{n}p_{i}\ln(q_{i}/p_{i})\le \sum_{i=1}^{n}p_{i}(q_{i}/p_{i}-1)=\sum_{i=1}^{n}(q_{i}-p_{i})=0
+\end{equation}
+\begin{equation}
+    -\sum_{i=1}^{n}p_{i}\ln p_{i}\le -\sum_{i=1}^{n}p_{i}\ln q_{i}
+\end{equation}
+
+\section{Kullback-Leibler Divergence}
+\begin{equation}
+D_{KL}(P||Q)=\sum_{i}P(i)ln\frac{P(i)}{Q(i)}
+\end{equation}
+
+\section{Bayes Theorem}
+\begin{equation}
+p(z|x)=\frac{p(x|z)p(z)}{p(x)}=\frac{p(x|z)p(z)}{\int p(x|u)p(u)du}
+\end{equation}
+
+\section{The Mathmatics View}
+\begin{equation}
+    \begin{split}
+    (g^*,h^*) &=\underset{(g,h)\in G\times H}{argmin} KL(q_{x}(z),p(z|x)) \\
+    &=\underset{(g,h)\in G\times H}{argmin} \int q_{x}(z)\log q_{x}(z) dz-\int q_{x}(z)\log \frac{p(x|z)p(z)}{p(x)}dz \\
+    &=\underset{(g,h)\in G\times H}{argmin} E_{z\sim q_{x}}(\log q_{x}(z)) - E_{z\sim q_{x}}(\log p(x|z))-E_{z\sim q_{x}}(p(z))\\
+    &=\underset{(g,h)\in G\times H}{argmax} E_{z\sim q_{x}}(-\frac{||x-f(z)||^{2}}{2c})-KL(q_{x}(z),p(z))
+    \end{split}
+\end{equation}
+the above formula can be written in general(gaussian distribution .vs. bernoulli distribution):
+\begin{equation}
+\begin{split}
+(g^*,h^*,f^*)&=\underset{(g,h,f)\in G\times H \times F}{argmax} E_{z\sim q_{x}}(-\frac{||x-f(z)||^{2}}{2c})-KL(q_{x}(z),p(z))\\
+    &\approx \underset{(g,h,f)\in G\times H \times F}{argmin} C||x-f(z)||^{2}+KL(N(g(x),h(x)),N(0,I))
+\end{split}
+\end{equation}
+Important Link:
+https://dmol.pub/dl/VAE.html
+\begin{equation}
+\begin{split}
+L_{bce} &=-y\ln p-(1-y)\ln (1-p) \\
+\frac{\partial L_{bce}}{\partial \theta} &=-\frac{y}{p}\frac{\partial p}{\partial \theta}+\frac{(1-y)}{(1-p)}\frac{\partial p}{\partial \theta} \\
+&=(\frac{(1-y)p-(1-p)y}{p(1-p)})\frac{\partial p}{\partial \theta}=0 \\
+p-yp-y+yp&=0 \\
+p&=y
+\end{split}
+\end{equation}
+Important Link:
+https://www.expunctis.com/2019/01/27/Loss-functions.html
+
+\section{Normalizing Flows}
+\begin{equation}
+\begin{split}
+\int P(x)dx &=\int P(z)dz \\
+            &=\int P(g(x))\frac{dg(x)}{dx}dx
+\end{split}
+\end{equation}
+Therefore, the following equations could be obtained:
+\begin{equation}
+P(x)=P(z)\frac{dg(x)}{d(x)}
+\end{equation}
+In general:
+\begin{equation}
+P(x)=P(z)\frac{\partial g_{2}(x)}{\partial g_{1}(x)}\frac{\partial g_{1}(x)}{\partial x}
+\end{equation}
+In practical calculations, we need negative log-likelihood:
+\begin{equation}
+l = -\log P(x)=-\log P(z)-\sum \log |det[J_{g_{i}}]|
+\end{equation}
+https://dmol.pub/dl/flows.html
+
+\section{Poisson Distribution}
+Important link: https://brilliant.org/wiki/poisson-distribution/
+\begin{equation}
+P(X=k)=\frac{\lambda ^{k}e^{-\lambda}}{k!}
+\end{equation}
+where $\lambda$ is the average of x
+
+\section{Exponential Distribution}
+The average value in unit time is $\lambda$.The probability of the first time less than or equal to w is:
+\begin{equation}
+P(X\leq w)=1-P(X>w)
+\end{equation}
+\begin{equation}
+P(X>w)=\frac{(w\lambda)^{0}e^{-(w\lambda)}}{0!}=e^{-(w\lambda)}
+\end{equation}
+Therefore
+\begin{equation}
+P(X\leq w)=1-e^{-(w\lambda)}
+\end{equation}
+Therefore, the probability of the first time occured at $w$ is 
+\begin{equation}
+p(w)=\frac{\partial P(X\leq w)}{\partial w}=\lambda e^{-w\lambda}
+\end{equation}
+\section{Gamma Distribution}
+Important link: https://www.clayford.net/statistics/deriving-the-gamma-distribution/
+\begin{equation}
+\begin{split}
+    P(X\leq w)&=1-P(X>w)=1-\sum_{k=0}^{\alpha -1}\frac{(w\lambda)^ke^{-(w\lambda)}}{k!}\\
+    &=1-e^{-(w\lambda)}-\sum_{k=1}^{\alpha-1}\frac{(w\lambda)^ke^{-(w\lambda)}}{k!}
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+    f(w)&=\frac{\partial P(x\leq w)}{\partial w}\\
+    &=\lambda e^{-(w\lambda)}-\sum_{k=1}^{\alpha-1}\frac{k\lambda (w\lambda)^{k-1}e^{-(w\lambda)}-(w\lambda)^{k}\lambda e^{-(w\lambda)}}{k!}\\
+    &=\lambda e^{-(w\lambda)}+\lambda e^{-(w\lambda)}\sum_{k=1}^{\alpha-1}\left[\frac{(w\lambda)^{k}}{k!}-\frac{(w\lambda)^{k-1}}{(k-1)!}\right]\\
+    &=\lambda e^{-(w\lambda)}+\lambda e^{-(w\lambda)}\left[ \frac{(w\lambda)^{\alpha-1}}{(\alpha-1)!}-1\right]\\
+    &=\frac{\lambda^{\alpha}w^{\alpha-1}}{(\alpha-1)!}e^{-(w\lambda)}
+\end{split}
+\end{equation}
+\section{Some Distributions}
+Normal or Gaussian distribution:
+\begin{equation}
+    f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/2\sigma^{2}}
+\end{equation}
+Supposing $z=x^{2}$:
+\begin{equation}
+    \begin{split}
+    \int_{0}^{+\infty} p(z)dz&=2\int_{0}^{+\infty} f(x)dx=\int_{0}^{+\infty} f(z^{\frac{1}{2}})dz^{\frac{1}{2}}\\
+    &=\int_{0}^{+\infty} \frac{1}{\sqrt{2\pi}}e^{-z/2}z^{-\frac{1}{2}}dz
+    \end{split}
+\end{equation}
+Therefore, the Chi-Squred distribution $p(z)=\frac{1}{\sqrt{2\pi}}e^{-z/2}z^{-\frac{1}{2}}$ is obtained. This distribution 
+could also be considered as a Gamma distribution:
+\begin{equation}
+p(z)=\frac{\lambda^{\alpha}}{\Gamma (\alpha)}z^{\alpha-1}e^{-(z\lambda)}
+\end{equation}
+where $\alpha$ and $\lambda$ are 1/2 and 1/2, respectively. Please remember:
+\begin{equation}
+\Gamma(\frac{1}{2})=\sqrt\pi
+\end{equation}
+If $z=x_{1}^{2}+x_{2}^{2}+...+x_{n}^{2}$,then
+\begin{equation}
+    p(z)=\frac{1}{2^{n/2}\Gamma(n/2)}z^{(n/2)-1}e^{-z/2}
+\end{equation}
+IF $x_{1}$,$x_{2}$,...,$x_{n}$ are sampled form $N(\mu,\sigma^{2})$,then
+\begin{equation}
+    \bar{X}=\frac{1}{n}\sum x_{i}
+\end{equation}
+\begin{equation}
+    p(\bar{x})\propto N(\mu,\sigma^{2}/n)
+\end{equation}
+\begin{equation}
+S^{2}=\frac{1}{n-1}\sum_{k=1}^{n-1}(x_{i}-\bar{x})^{2}
+\end{equation}
+\begin{equation}
+    (n-1)S^{2}/\sigma^{2}=\chi_{n-1}^{2}
+\end{equation}
+\begin{equation}
+    \begin{split}
+    t&=\frac{\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}}{\sqrt{(n-1)S^{2}/(n-1)\sigma^{2}}}\\
+    &=\frac{\bar{x}-\mu}{S/\sqrt{n}}
+    \end{split}
+\end{equation}
+\section{The sum of Chi-Squared Random Variables}
+Supposing $x_{1} \sim \chi^{2}(r_{1})$,$x_{2} \sim \chi^{2}(r_{2})$,...,$x_{n} \sim \chi^{2}(r_{n})$ and $y=x_{1}+x_{2}+
+...+x_{n}$, then $y\propto \chi^{2}(r_{1}+r_{2}+...+r_{n})$
+\section{ANOVA Analysis}
+\begin{equation}
+SS=\sum_{i=1}^{K}\sum_{j=1}^{N_{i}}(Y_{ij}-\bar{Y})^2
+\end{equation}
+where $K$ means the number of groups and $N_{i}$ means the number of samples in the $i$th group. $\bar{Y}$ is the total average:
+\begin{equation}
+    \bar{Y}=\frac{1}{N}\sum_{i=1}^{K}\sum_{j=1}^{N_{i}}Y_{ij}
+\end{equation}
+The random errors, which is also called the deviations within group, could be defined as:
+\begin{equation}
+    SS_{e}=\sum_{i=1}^{K}\sum_{j=1}^{N_{j}}(Y_{ij}-\bar{Y_{i}})^{2}
+\end{equation}
+The systematic errors, which is also called the deviations among groups, could be defined as:
+\begin{equation}
+    SS_{a}=\sum_{i=1}^{K}N_{i}(\bar{Y_{i}}-\bar{Y})^2
+\end{equation}
+According to the following equation:
+\begin{equation}
+    \begin{split}
+    \frac{1}{\sigma^{2}}\sum_{j=1}^{N_{i}}(Y_{ij}-\mu)^{2}&=\frac{1}{\sigma^{2}}\sum_{j=1}^{N_{i}}(Y_{ij}-\bar{Y_{i}}+
+    \bar{Y_{i}}-\mu)^{2}\\
+    &=\frac{1}{\sigma^{2}}\sum_{j=1}^{N_{i}}(Y_{ij}-\bar{Y_{i}})^{2}+\frac{N_{i}}{\sigma^{2}}(Y_{i}-\mu)^{2}
+    \end{split}
+\end{equation}
+Therefore,
+\begin{equation}
+    \frac{1}{\sigma^{2}}\sum_{j=1}^{N_{i}}(Y_{ij}-\bar{Y_{i}})^{2}\propto\chi_{N_{i}}^{2}-\chi_{1}^{2}=\chi_{N_{i}-1}^{2}
+\end{equation}
+According to the sum of $\chi^{2}$ distributions:
+\begin{equation}
+    \frac{SS_{e}}{\sigma^{2}}\propto \chi_{N-3}^{2}
+\end{equation}
+\begin{equation}
+    \frac{N_{1}(\bar{x_{1}}-\mu)^{2}+N_{2}(\bar{x_{2}}-\mu)^{2}+N_{3}(\bar{x_{3}}-\mu)^{2}}{\sigma^{2}}\propto \chi_{3}^{2}
+\end{equation}
+\begin{equation} 
+\begin{aligned}
+&\frac{N_{1}(\bar{x_{1}}-\mu)^{2}+N_{2}(\bar{x_{2}}-\mu)^{2}+N_{3}(\bar{x_{3}}-\mu)^{2}}{\sigma^{2}}\\
+    &=\frac{N_{1}(\bar{x_{1}}-\bar{x}+\bar{x}-\mu)^{2}+N_{2}(\bar{x_{2}}-\bar{x}+\bar{x}-\mu)^{2}+N_{3}(\bar{x_{3}}-\bar{x}+\bar{x}-\mu)^{2}}{\sigma^{2}}\\
+    &=\frac{N_{1}(\bar{x_{1}}-\bar{x})^{2}+N_{2}(\bar{x_{2}}-\bar{x})^{2}+N_{3}(\bar{x_{3}}-\bar{x})^{2}}{\sigma^{2}}+\frac{N(\bar{x}-\mu)^{2}}{\sigma^{2}}\\
+    &+\frac{2\left[(N_{1}\bar{x_{1}}+N_{2}\bar{x_{2}}+N_{3}\bar{x_{3}}-N\bar{x})(\bar{x}-\mu)\right]}{\sigma^{2}}\\
+    &=\frac{N_{1}(\bar{x_{1}}-\bar{x})^{2}+N_{2}(\bar{x_{2}}-\bar{x})^{2}+N_{3}(\bar{x_{3}}-\bar{x})^{2}}{\sigma^{2}}+\frac{N(\bar{x}-\mu)^{2}}{\sigma^{2}}\\
+    &=SS_{a}+\frac{N(\bar{x}-\mu)^{2}}{\sigma^{2}} \label{39}
+\end{aligned}
+\end{equation}
+According to the following two relations:
+\begin{equation}
+    \begin{aligned}
+    &\frac{N_{1}(\bar{x_{1}}-\mu)^{2}+N_{2}(\bar{x_{2}}-\mu)^{2}+N_{3}(\bar{x_{3}}-\mu)^{2}}{\sigma^{2}}\propto \chi_{3}^{2}\\
+    &\frac{N(\bar{x}-\mu)^{2}}{\sigma^{2}}\propto \chi_{1}^{2}
+    \end{aligned}
+\end{equation}
+the moment generating function on both sides of Eq.39 could be expressed as
+\begin{equation}
+\begin{split}
+(1-2t)^{-n/2}=M_{SS_{a}}(t)\times(1-2t)^{-1/2}
+\end{split}
+\end{equation}
+So
+\begin{equation}
+\begin{aligned}
+&M_{SS_{a}}(t)=(1-2t)^{-(n-1)/2}\\
+&SS_{a}\propto \chi_{n-1}^{2}
+\end{aligned}
+\end{equation}
+\section{Jarzynski equality}
+The evolution of the system is Markovian:
+\begin{equation}
+    \begin{split}
+P(r_{0}&\xrightarrow{\lambda_{1}}\;r_{1}\xrightarrow{\lambda_{2}}\;r_{2}\xrightarrow{\lambda_{3}}\;r_{3}\cdots r_{\tau -1}\xrightarrow{\lambda_{\tau}}\;r_{\tau})\\
+&=P(r_{0}\xrightarrow{\lambda_{1}}\;r_{1})P(r_{1}\xrightarrow{\lambda_{2}}\;r_{2})\cdots P(r_{\tau -1}\xrightarrow{\lambda_{\tau}}\;r_{\tau})
+    \end{split}
+\end{equation}
+The work performed on the process:
+\begin{equation}
+    W=\sum_{i=0}^{\tau-1}(E_{r_{i},\lambda_{i+1}}-E_{r_{i},\lambda_{i}})
+\end{equation}
+The heat exchanged with the reservoir:
+\begin{equation}
+    Q=\sum_{i=1}^{\tau}(E_{r_{i},\lambda_{i}}-E_{r_{i-1},\lambda_{i}})
+\end{equation}
+Therefore, the total energy change is
+\begin{equation}
+    \Delta E=E_{r_{\tau},\lambda_{\tau}}-E_{r_{0},\lambda_{0}}
+\end{equation}
+The detailed balance condition:
+\begin{equation}
+e^{-\beta E(r_{i},\lambda)}P(r_{i}\xrightarrow{\lambda}\;r_{j})=e^{-\beta E(r_{j},\lambda)}P(r_{j}\xrightarrow{\lambda}\;r_{i})
+\end{equation}
+The ratio of probabilities of a forward path versus the corresponding reversed path is:
+\begin{equation}
+    \begin{aligned}
+&\frac{P(r_{0}\xrightarrow{\lambda_{1}}\;r_{1}\xrightarrow{\lambda_{2}}\;r_{2}\xrightarrow{\lambda_{3}}\;r_{3}\cdots r_{\tau -1}\xrightarrow{\lambda_{\tau}}\;r_{\tau})}{P(r_{\tau}\xrightarrow{\lambda_{\tau}}\;r_{\tau-1}\cdots r_{3}\xrightarrow{\lambda_{3}}\;r_{2}\xrightarrow{\lambda_{2}}\;r_{1}\xrightarrow{\lambda_{1}}\;r_{0})}\\
+&=\frac{P(r_{0}\xrightarrow{\lambda_{1}}\;r_{1})P(r_{1}\xrightarrow{\lambda_{2}}\;r_{2})\cdots P(r_{\tau -1}\xrightarrow{\lambda_{\tau}}\;r_{\tau})}{P(r_{1}\xrightarrow{\lambda_{1}}\;r_{0})P(r_{2}\xrightarrow{\lambda_{2}}\;r_{1})\cdots P(r_{\tau}\xrightarrow{\lambda_{\tau}}\;r_{\tau-1})}\\
+&=e^{-\beta Q}
+    \end{aligned}
+\end{equation}
+So
+\begin{equation}
+    \begin{split}
+&\overline{e^{-\beta W}}=\sum_{r_{0},r_{1},r_{r2},\cdots,r_{\tau}}P(r_0|\lambda_{0})P(r_{0}\xrightarrow{\lambda_{1}}\;r_{1}\xrightarrow{\lambda_{2}}\;r_{2}\xrightarrow{\lambda_{3}}\;r_{3}\cdots r_{\tau -1}\xrightarrow{\lambda_{\tau}}\;r_{\tau})e^{-\beta W}\\
+&=\sum_{r_{0},r_{1},r_{r2},\cdots,r_{\tau}}P(r_{\tau}|\lambda_{\tau})P(r_{\tau}\xrightarrow{\lambda_{\tau}}\;r_{\tau-1}\cdots r_{3}\xrightarrow{\lambda_{3}}\;r_{2}\xrightarrow{\lambda_{2}}\;r_{1}\xrightarrow{\lambda_{1}}\;r_{0})e^{-\beta(\Delta F-\Delta E +W+Q)}\\
+&=e^{-\beta \Delta F}\sum_{r_{0},r_{1},r_{r2},\cdots,r_{\tau}}P(r_{\tau}|\lambda_{\tau})P(r_{\tau}\xrightarrow{\lambda_{\tau}}\;r_{\tau-1}\cdots r_{3}\xrightarrow{\lambda_{3}}\;r_{2}\xrightarrow{\lambda_{2}}\;r_{1}\xrightarrow{\lambda_{1}}\;r_{0})\\
+&=e^{-\beta \Delta F}
+    \end{split}
+\end{equation}
+reference https://link.springer.com/content/pdf/10.1023/A:1023208217925.pdf
+\end{document}

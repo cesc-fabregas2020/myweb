@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block title %}批量上传分子{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        批量上传分子
+        <small>测试版</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">批量上传分子</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+
+    {% if documents %}
+        <ul>
+        {% for document in documents %}
+            <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li> 
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+
+    <form action="{% url 'chemblbase:uploadfile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }} 
+        </p>
+        <P class="fieldWrapper">
+            {{ form.file_type.errors }}
+            {{ form.file_type|as_crispy_field }}
+        </P>
+        <P class="fieldWrapper">
+            {{ form.project_type.errors }}
+            {{ form.project_type|as_crispy_field }}
+        </P>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+
+    <!-- /.content -->
+{% endblock %}

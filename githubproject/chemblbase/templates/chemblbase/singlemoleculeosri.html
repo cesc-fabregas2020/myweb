@@ -1,0 +1,19 @@
+{% load static %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+   {% endblock %}
+
+<script type="text/javascript" language="javascript" src="{% static 'JSME_2021-07-13/jsme/jsme.nocache.js' %}"></script>
+
+<table>
+    <tr>
+        
+<td><div code="JME.class" archive="JME.jar" text-align=center width=600 height=300>
+    <param name="options" value="depict,useopenchemlib">
+    <param name="smiles"
+           value={{compound_smile}}>
+</div>
+</td>
+</tr>
+</table>
